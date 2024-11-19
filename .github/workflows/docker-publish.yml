@@ -10,6 +10,7 @@ on:
   push: 
     paths: 
       - 'Dockerfile'
+      - 'conda-linux-64.lock'
       
 jobs:
   push_to_registry:
