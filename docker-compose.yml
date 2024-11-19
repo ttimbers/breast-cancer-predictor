@@ -2,7 +2,7 @@ services:
   # run jupyter notebook inside vscode 
   # with working directory the same location as the notebook (notebooks directory)
   notebook:
-    image:  testbc
+    image:  ttimbers/breast-cancer-predictor:762e7d4
     ports:
       - "8888:8888"
     volumes:
@@ -12,10 +12,11 @@ services:
         limits:
           memory: 5G
     platform: linux/amd64
+
   # run docker container with bash shell 
   # with project root mounted at /home/jovyan
   cmd:
-    image:  testbc
+    image:  ttimbers/breast-cancer-predictor:762e7d4
     container_name: cmd-env
     command: /bin/bash
     stdin_open: true
