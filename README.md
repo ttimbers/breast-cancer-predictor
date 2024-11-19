@@ -45,35 +45,50 @@ physicians.
 The final report can be found
 [here](https://ttimbers.github.io/breast-cancer-predictor/notebooks/breast_cancer_predictor_report.html).
 
-## Usage
-
-First time running the project,
-run the following from the root of this repository:
-
-``` bash
-conda-lock install --name breast-cancer-predictor conda-lock.yml
-```
-
-To run the analysis,
-run the following from the root of this repository:
-
-``` bash
-jupyter lab 
-```
-
-Open `notebooks/breast_cancer_predict_report.ipynb` in Jupyter Lab
-and under Switch/Select Kernel choose 
-"Python [conda env:breast-cancer-predictor]".
-
-Next, under the "Kernel" menu click "Restart Kernel and Run All Cells...".
-
 ## Dependencies
-
 - `conda` (version 23.9.0 or higher)
 - `conda-lock` (version 2.5.7 or higher)
-- `jupyterlab` (version 4.0.0 or higher)
-- `nb_conda_kernels` (version 2.3.1 or higher)
-- Python and packages listed in [`environment.yml`](environment.yml)
+- [Docker](https://www.docker.com/) 
+- [VS Code](https://code.visualstudio.com/download)
+- [VS Code Jupyter Extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
+
+## Usage
+
+#### Setup
+
+> If you are using Windows or Mac, make sure Docker Desktop is running.
+
+1. Clone this GitHub repository.
+
+#### Running the analysis
+
+1. Open VS Code to the root of this project.
+
+2. Open the `notebooks/breast_cancer_predict_report.ipynb` file.
+
+3. Open a new terminal inside VS Code and type: 
+
+```
+docker compose up
+```
+
+4. In the terminal, look for a URL that starts with 
+`http://127.0.0.1:8888/lab?token=` 
+(for an example, see the highlighted text in the terminal below). 
+Copy that URL to your clipboard.
+
+5. Click on the kernel selector in the top right corner of the notebook, 
+and then click "Select Another Kernel" > "Existing Jupyter Server". 
+Paste the copied URL into the text box, press Enter twice,
+and select "Python 3" as the kernel.
+
+6. To run the analysis, click "Restart" and then "Run All" (at the top of the notebook).
+
+#### Clean up
+
+1. To shut down the container and clean up the resources, 
+type `Cntrl` + `C` in the terminal
+where you launched the container, and then type `docker compose rm`
 
 ## License
 
