@@ -5,8 +5,9 @@ services:
     image:  ttimbers/breast-cancer-predictor:762e7d4
     ports:
       - "8888:8888"
+    working_dir: /home/jovyan/notebooks
     volumes:
-      - ./notebooks:/home/jovyan
+      - .:/home/jovyan
     deploy:
       resources:
         limits:
