@@ -46,21 +46,19 @@ The final report can be found
 [here](https://ttimbers.github.io/breast-cancer-predictor/notebooks/breast_cancer_predictor_report.html).
 
 ## Dependencies
-- `conda` (version 23.9.0 or higher)
-- `conda-lock` (version 2.5.7 or higher)
 - [Docker](https://www.docker.com/) 
 - [VS Code](https://code.visualstudio.com/download)
 - [VS Code Jupyter Extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
 
 ## Usage
 
-#### Setup
+### Setup
 
 > If you are using Windows or Mac, make sure Docker Desktop is running.
 
 1. Clone this GitHub repository.
 
-#### Running the analysis
+### Running the analysis
 
 1. Open VS Code to the root of this project.
 
@@ -84,11 +82,34 @@ and select "Python 3" as the kernel.
 
 6. To run the analysis, click "Restart" and then "Run All" (at the top of the notebook).
 
-#### Clean up
+### Clean up
 
 1. To shut down the container and clean up the resources, 
 type `Cntrl` + `C` in the terminal
 where you launched the container, and then type `docker compose rm`
+
+## Developer notes
+
+### Developer dependencies
+- `conda` (version 23.9.0 or higher)
+- `conda-lock` (version 2.5.7 or higher)
+
+### Adding a new dependency
+
+1. Add the dependency to the `environment.yml` file on a new branch.
+
+2. Run `conda-lock -k explicit --file environment.yml -p linux-64` to update the `conda-linux-64.lock` file.
+
+2. Re-build the Docker image locally to ensure it builds and runs properly.
+
+3. Push the changes to GitHub. A new Docker
+   image will be built and pushed to Docker Hub automatically.
+   It will be tagged with the SHA for the commit that changed the file.
+
+4. Update the `docker-compose.yml` file on your branch to use the new
+   container image (make sure to update the tag specifically).
+
+5. Send a pull request to merge the changes into the `main` branch. 
 
 ## License
 
