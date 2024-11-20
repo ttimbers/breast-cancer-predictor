@@ -60,27 +60,23 @@ The final report can be found
 
 ### Running the analysis
 
-1. Open VS Code to the root of this project.
+1. Navigate to the root of this project on your computer using the
+   command line and enter the following command:
 
-2. Open the `notebooks/breast_cancer_predict_report.ipynb` file.
-
-3. Open a new terminal inside VS Code and type: 
-
-```
+``` 
 docker compose up
 ```
 
-4. In the terminal, look for a URL that starts with 
+2. In the terminal, look for a URL that starts with 
 `http://127.0.0.1:8888/lab?token=` 
 (for an example, see the highlighted text in the terminal below). 
-Copy that URL to your clipboard.
+Copy and paste that URL into your browser.
 
-5. Click on the kernel selector in the top right corner of the notebook, 
-and then click "Select Another Kernel" > "Existing Jupyter Server". 
-Paste the copied URL into the text box, press Enter twice,
-and select "Python 3" as the kernel.
+<img src="img/jupyter-container-web-app-launch-url.png" width=400>
 
-6. To run the analysis, click "Restart" and then "Run All" (at the top of the notebook).
+3. To run the analysis,
+open `src/breast_cancer_predict_report.ipynb` in Jupyter Lab you just launched
+and under the "Kernel" menu click "Restart Kernel and Run All Cells...".
 
 ### Clean up
 
