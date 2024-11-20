@@ -1,10 +1,10 @@
-name: breast-cancer-predictor-2
+name: breast-cancer-predictor
 channels:
   - conda-forge
   - defaults
 dependencies:
   - altair=5.1.2
-  - deepchecks=0.3.2
+  - deepchecks=0.18.*
   - ipykernel=6.26.0
   - pandas=2.1.2
   - pandera=0.20.4
@@ -17,3 +17,5 @@ dependencies:
   - requests=2.31.0
   - notebook=6.5.4
   - jupyter_contrib_nbextensions=0.7.0
+  - pip:
+      - deepchecks==0.18.1
