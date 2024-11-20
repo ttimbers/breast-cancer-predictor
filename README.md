@@ -8,23 +8,7 @@ British Columbia.
 
 ## About
 
-Here we attempt to build a classification model using the k-nearest 
-neighbours algorithm which can use breast cancer tumour image 
-measurements to predict whether a newly discovered breast cancer tumour 
-is benign (i.e., is not harmful and does not require treatment) or 
-malignant (i.e., is harmful and requires treatment intervention). 
-Our final classifier performed fairly well on an unseen test data set, 
-with Fbeta score, where beta = 2, of 0.98 
-and an overall accuracy calculated to be 0.96. On the 171 test data cases, 
-it correctly predicted 168. 
-It incorrectly predicted 3 cases, 
-however these were false positives - predicting that a tumour is malignant 
-when in fact it is benign. 
-These kind of incorrect predictions could cause the patient 
-to undergo unnecessary treatment, 
-and as such we recommend further research to improve the model 
-before it is ready to be put into production in the clinic.
-
+Here we attempt to build a classification model using the k-nearest neighbours algorithm which can use breast cancer tumour image measurements to predict whether a newly discovered breast cancer tumour is benign (i.e., is not harmful and does not require treatment) or malignant (i.e., is harmful and requires treatment intervention). Our final classifier performed well on an unseen test data set, with the F2 score, where beta = 2, of 0.97 and an overall accuracy calculated to be 0.87. On the 171 test data cases, it correctly predicted 157. Nine mistakes were predicting a benign tumour as malignant, while 4 mistakes where predicting a malignant tumour as benign. This is somewhat promising for implementing this in the clinic as false positives are less harmful than false negatives. Although they could theoretically cause the patient to undergo unnecessary treatment if the model is used as a decision tool, it is likely that the model is used for initial screening and that there will be a follow up appointment and further testing until treatment commences. However, the observation of even 4 mistakes predicting a malignant tumour as benign is concerning. As such, we believe further development of this model is needed for it to have clinical utility. Research to improve the model performance and understand the characteristics of incorrectly predicted patients is recommended.
 
 The data set that was used in this project is of digitized breast cancer
 image features created by Dr. William H. Wolberg, W. Nick Street, and
