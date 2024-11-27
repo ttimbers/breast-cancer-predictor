@@ -1,7 +1,7 @@
 services:
   # run jupyter notebook inside jupyter 
   jupyter-notebook:
-    image:  ttimbers/breast-cancer-predictor:e8eb36e
+    image:  ttimbers/breast-cancer-predictor:be03571
     ports:
       - "8888:8888"
     volumes:
