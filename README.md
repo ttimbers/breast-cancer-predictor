@@ -27,7 +27,7 @@ physicians.
 ## Report
 
 The final report can be found
-[here](https://ttimbers.github.io/breast-cancer-predictor/notebooks/breast_cancer_predictor_report.html).
+[here](https://ttimbers.github.io/breast-cancer-predictor/report/breast_cancer_predictor_report.html).
 
 ## Dependencies
 - [Docker](https://www.docker.com/) 
