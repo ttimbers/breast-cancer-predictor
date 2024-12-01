@@ -91,8 +91,8 @@ python scripts/evaluate_breast_cancer_predictor.py \
 	--results-to=results/tables \
 	--seed=524
 
-quarto render docs/breast_cancer_predictor_report.qmd -to html
-quarto render docs/breast_cancer_predictor_report.qmd -to pdf
+quarto render docs/breast_cancer_predictor_report.qmd --to html
+quarto render docs/breast_cancer_predictor_report.qmd --to pdf
 ```
 
 ### Clean up
