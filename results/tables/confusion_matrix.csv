@@ -1,0 +1,3 @@
+class,Benign,Malignant
+Benign,102,5
+Malignant,9,55

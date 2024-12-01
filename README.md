@@ -59,8 +59,41 @@ Copy and paste that URL into your browser.
 <img src="img/jupyter-container-web-app-launch-url.png" width=400>
 
 3. To run the analysis,
-open `src/breast_cancer_predict_report.ipynb` in Jupyter Lab you just launched
-and under the "Kernel" menu click "Restart Kernel and Run All Cells...".
+open a terminal and run the following commands:
+
+```
+python scripts/download_data.py \
+    --url="https://archive.ics.uci.edu/static/public/15/breast+cancer+wisconsin+original.zip" \
+    --write-to=data/raw
+
+python scripts/split_n_preprocess.py \
+    --raw-data=data/raw/wdbc.data \
+    --data-to=data/processed \
+    --preprocessor-to=results/models \
+    --seed=522
+
+python scripts/eda.py \
+    --processed-training-data=data/processed/scaled_cancer_train.csv \
+    --plot-to=results/figures
+
+python scripts/fit_breast_cancer_classifier.py \
+    --training-data=data/processed/cancer_train.csv \
+    --preprocessor=results/models/cancer_preprocessor.pickle \
+    --columns-to-drop=data/processed/columns_to_drop.csv \
+    --pipeline-to=results/models \
+    --plot-to=results/figures \
+    --seed=523
+
+
+python scripts/evaluate_breast_cancer_predictor.py \
+	--scaled-test-data=data/processed/cancer_test.csv \
+	--pipeline-from=results/models/cancer_pipeline.pickle \
+	--results-to=results/tables \
+	--seed=524
+
+quarto render docs/breast_cancer_predictor_report.qmd --to html
+quarto render docs/breast_cancer_predictor_report.qmd --to pdf
+```
 
 ### Clean up
 
