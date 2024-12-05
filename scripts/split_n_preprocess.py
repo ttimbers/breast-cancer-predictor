@@ -15,6 +15,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.compose import make_column_transformer, make_column_selector
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.validate_data import validate_data
+from src.write_csv import write_csv
 
 @click.command()
 @click.option('--raw-data', type=str, help="Path to raw data")
@@ -77,8 +78,8 @@ def main(raw_data, data_to, preprocessor_to, seed):
         cancer, train_size=0.70, stratify=cancer["class"]
     )
 
-    cancer_train.to_csv(os.path.join(data_to, "cancer_train.csv"), index=False)
-    cancer_test.to_csv(os.path.join(data_to, "cancer_test.csv"), index=False)
+    write_csv(cancer_train, data_to, "cancer_train.csv")
+    write_csv(cancer_test, data_to, "cancer_test.csv")
 
     cancer_preprocessor = make_column_transformer(
         (StandardScaler(), make_column_selector(dtype_include='number')),
@@ -91,8 +92,9 @@ def main(raw_data, data_to, preprocessor_to, seed):
     scaled_cancer_train = cancer_preprocessor.transform(cancer_train)
     scaled_cancer_test = cancer_preprocessor.transform(cancer_test)
 
-    scaled_cancer_train.to_csv(os.path.join(data_to, "scaled_cancer_train.csv"), index=False)
-    scaled_cancer_test.to_csv(os.path.join(data_to, "scaled_cancer_test.csv"), index=False)
+    write_csv(scaled_cancer_train, data_to, "scaled_cancer_train.csv")
+    write_csv(scaled_cancer_test, data_to, "scaled_cancer_test.csv")
+
 
 if __name__ == '__main__':
     main()

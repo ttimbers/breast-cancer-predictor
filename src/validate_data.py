@@ -35,10 +35,8 @@ def validate_data(cancer_dataframe):
         - Measurement columns (e.g., 'mean_radius', 'mean_texture', etc.) must fall within specific ranges.
         - Additional checks ensure there are no duplicate or completely empty rows in the DataFrame.
     """
-    
     if not isinstance(cancer_dataframe, pd.DataFrame):
         raise TypeError("Input must be a pandas DataFrame")    
-
     if cancer_dataframe.empty:
         raise ValueError("Dataframe must contain observations.")
     

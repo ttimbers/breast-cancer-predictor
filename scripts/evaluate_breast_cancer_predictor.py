@@ -4,6 +4,7 @@
 
 import click
 import os
+import sys
 import numpy as np
 import pandas as pd
 import pickle
@@ -15,6 +16,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import fbeta_score, make_scorer
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.write_csv import write_csv
 
 @click.command()
 @click.option('--scaled-test-data', type=str, help="Path to scaled test data")
@@ -60,7 +63,8 @@ def main(scaled_test_data, columns_to_drop, pipeline_from, results_to, seed):
         cancer_preds["class"],
         cancer_preds["predicted"],
     )
-    confusion_matrix.to_csv(os.path.join(results_to, "confusion_matrix.csv"))
+    write_csv(confusion_matrix, results_to, "confusion_matrix.csv", index=True)
+
 
 if __name__ == '__main__':
     main()
