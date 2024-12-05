@@ -1,6 +1,6 @@
 # Breast Cancer Predictor
 
-  - author: Tiffany Timbers, Melissa Lee & Joel Ostblom
+  - author: Tiffany Timbers, Melissa Lee, Joel Ostblom & Weilin Han
 
 Demo of a data analysis project for DSCI 522 (Data Science workflows); a
 course in the Master of Data Science program at the University of
@@ -107,6 +107,8 @@ where you launched the container, and then type `docker compose rm`
 Use the same `docker compose up` command as described in the [Running the analysis](#running-the-analysis) section above
 to launch Jupyter lab.
 Tests are run using the `pytest` command in the root of the project.
+More details about the test suite can be found in the 
+[`tests`](tests) directory.
 
 ## License
 
