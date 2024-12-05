@@ -38,10 +38,13 @@ def validate_data(cancer_dataframe):
     
     if not isinstance(cancer_dataframe, pd.DataFrame):
         raise TypeError("Input must be a pandas DataFrame")    
+
+    if cancer_dataframe.empty:
+        raise ValueError("Dataframe must contain observations.")
     
     schema = pa.DataFrameSchema(
         {
-            "class": pa.Column(str, pa.Check.isin(["Benign", "Malignant"])),
+            "class": pa.Column(str, pa.Check.isin(["Benign", "Malignant"]), nullable=False),
             "mean_radius": pa.Column(float, pa.Check.between(5, 45), nullable=True),
             "mean_texture": pa.Column(float, pa.Check.between(5, 50), nullable=True),
             "mean_perimeter": pa.Column(float, pa.Check.between(40, 260), nullable=True), 
