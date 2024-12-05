@@ -1,6 +1,6 @@
 ---
 title: Predicting breast cancer from digitized images of breast mass
-author: "Tiffany A. Timbers, Joel Ostblom & Melissa Lee"
+author: "Tiffany A. Timbers, Melissa Lee, Joel Ostblom & Weilin Han"
 date: "2023/11/09"
 jupyter: python3
 format: 
