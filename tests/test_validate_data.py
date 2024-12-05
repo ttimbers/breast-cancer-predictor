@@ -58,20 +58,25 @@ def test_valid_data_empty_data_frame():
 # Setup list of invalid data cases 
 invalid_data_cases = []
 
-# Case: missing value in "class" column
-case_missing_class = valid_data.copy()
-case_missing_class.loc[0, "class"] = None
-invalid_data_cases.append((case_missing_class, "Check absent or incorrect for missing/null 'class' value"))
-
-# Case: label in "class" column encoded as 0 and 1, instead of Benign and Malignant
-case_wrong_label_type = valid_data.copy()
-case_wrong_label_type["class"] = case_wrong_label_type["class"].map({'Benign': 0, 'Malignant': 1})
-invalid_data_cases.append((case_missing_class, "Check incorrect type for'class' values is missing or incorrect"))
-
 # Case: missing "class" column
 case_missing_class_col = valid_data.copy()
 case_missing_class_col = case_missing_class_col.drop("class", axis=1)  # drop class column
 invalid_data_cases.append((case_missing_class_col, "`class` from DataFrameSchema"))
+
+# Case: label in "class" column encoded as 0 and 1, instead of Benign and Malignant
+case_wrong_label_type = valid_data.copy()
+case_wrong_label_type["class"] = case_wrong_label_type["class"].map({'Benign': 0, 'Malignant': 1})
+invalid_data_cases.append((case_wrong_label_type, "Check incorrect type for'class' values is missing or incorrect"))
+
+# Case: wrong string value/category in "class" column
+case_wrong_category_label = valid_data.copy()
+case_wrong_category_label.loc[0, "class"] = "benign"
+invalid_data_cases.append((case_wrong_category_label, "Check absent or incorrect for wrong string value/category in 'class' column"))
+
+# Case: missing value in "class" column
+case_missing_class = valid_data.copy()
+case_missing_class.loc[0, "class"] = None
+invalid_data_cases.append((case_missing_class, "Check absent or incorrect for missing/null 'class' value"))
 
 # Case: missing numeric columns (one for each numeric column) where column is missing
 numeric_columns = valid_data.select_dtypes(include=np.number).columns
@@ -115,5 +120,5 @@ invalid_data_cases.append((case_missing_obs, f"Check absent or incorrect for mis
 # Parameterize invalid data test cases
 @pytest.mark.parametrize("invalid_data, description", invalid_data_cases)
 def test_valid_w_invalid_data(invalid_data, description):
-    with pytest.raises(pa.errors.SchemaErrors):
+    with pytest.raises(pa.errors.SchemaErrors) as:
         validate_data(invalid_data)
