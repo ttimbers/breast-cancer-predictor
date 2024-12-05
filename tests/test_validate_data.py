@@ -43,13 +43,24 @@ valid_data = pd.DataFrame({
     "max_fractal_dimension": [0.1, np.nan, 0.9],
 })
 
+# Case: wrong type passed to function
+valid_data_as_np = valid_data.copy().to_numpy()
+def test_valid_data_type():
+    with pytest.raises(TypeError):
+        validate_data(valid_data_as_np)
+
 # Setup list of invalid data cases 
 invalid_data_cases = []
 
 # Case: missing value in "class" column
 case_missing_class = valid_data.copy()
-case_missing_class["class"].iloc[0] = None
+case_missing_class.loc[0, "class"] = None
 invalid_data_cases.append((case_missing_class, "Check absent or incorrect for missing/null 'class' value"))
+
+# Case: label in "class" column encoded as 0 and 1, instead of Benign and Malignant
+case_wrong_label_type = valid_data.copy()
+case_wrong_label_type["class"] = case_wrong_label_type["class"].map({'Benign': 0, 'Malignant': 1})
+invalid_data_cases.append((case_missing_class, "Check incorrect type for'class' values is missing or incorrect"))
     
 # Generate 30 cases Case (one for each numeric column) where data is out of range (too large)
 numeric_columns = valid_data.select_dtypes(include=np.number).columns
@@ -65,7 +76,25 @@ for col in numeric_columns:
     case_too_small[col] = case_too_small[col] - 10  # Adding an arbitrary value to make it out of range
     invalid_data_cases.append((case_too_small, f"Check absent or incorrect for numeric values in '{col}' being too small"))
 
-# Parameterize test cases
+# Generate 30 cases Case (one for each numeric column) where data is the wrong type
+numeric_columns = valid_data.select_dtypes(include=np.number).columns
+for col in numeric_columns:
+    case_wrong_type = valid_data.copy()
+    case_wrong_type[col] = case_wrong_type[col].fillna(0.0).astype(int) # convert from float to int
+    invalid_data_cases.append((case_wrong_type, f"Check incorrect type for float values in '{col}' is missing or incorrect"))
+
+# Case: duplicate observations
+case_duplicate = valid_data.copy()
+case_duplicate = pd.concat([case_duplicate, case_duplicate.iloc[[0], :]], ignore_index=True)
+invalid_data_cases.append((case_duplicate, f"Check absent or incorrect for duplicate rows"))
+
+# Case: entire missing observation
+case_missing_obs = valid_data.copy()
+nan_row = pd.DataFrame([[np.nan] * (case_missing_obs.shape[1] - 1) + [np.nan]], columns=case_missing_obs.columns)
+case_missing_obs = pd.concat([case_missing_obs, nan_row], ignore_index=True)
+invalid_data_cases.append((case_missing_obs, f"Check absent or incorrect for missing observations (e.g., a row of all missing values)"))
+
+# Parameterize invalid data test cases
 @pytest.mark.parametrize("invalid_data, description", invalid_data_cases)
 def test_valid_data(invalid_data, description):
     with pytest.raises(pa.errors.SchemaErrors):
