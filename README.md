@@ -64,7 +64,7 @@ open a terminal and run the following commands:
 ```
 python scripts/download_data.py \
     --url="https://archive.ics.uci.edu/static/public/15/breast+cancer+wisconsin+original.zip" \
-    --write-to=data/raw
+    --write_to=data/raw
 
 python scripts/split_n_preprocess.py \
     --raw-data=data/raw/wdbc.data \

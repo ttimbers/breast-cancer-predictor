@@ -4,16 +4,17 @@
 
 import click
 import os
+import sys
 import numpy as np
 import pandas as pd
-import pandera as pa
 import pickle
 from sklearn.model_selection import train_test_split
 from sklearn import set_config
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import make_column_transformer, make_column_selector
-
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.validate_data import validate_data
 
 @click.command()
 @click.option('--raw-data', type=str, help="Path to raw data")
@@ -69,47 +70,7 @@ def main(raw_data, data_to, preprocessor_to, seed):
         'B' : 'Benign'
     })
 
-    # validate data
-    schema = pa.DataFrameSchema(
-        {
-            "class": pa.Column(str, pa.Check.isin(["Benign", "Malignant"])),
-            "mean_radius": pa.Column(float, pa.Check.between(5, 45), nullable=True),
-            "mean_texture": pa.Column(float, pa.Check.between(5, 50), nullable=True),
-            "mean_perimeter": pa.Column(float, pa.Check.between(40, 260), nullable=True), 
-            "mean_area": pa.Column(float, pa.Check.between(140, 4300), nullable=True),
-            "mean_smoothness": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "mean_compactness": pa.Column(float, pa.Check.between(0, 2), nullable=True),
-            "mean_concavity": pa.Column(float, pa.Check.between(0, 2), nullable=True),
-            "mean_concave_points": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "mean_symmetry": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "mean_fractal_dimension": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "se_radius": pa.Column(float, pa.Check.between(0, 3), nullable=True),
-            "se_texture": pa.Column(float, pa.Check.between(0, 5), nullable=True),
-            "se_perimeter": pa.Column(float, pa.Check.between(0, 22), nullable=True), 
-            "se_area": pa.Column(float, pa.Check.between(6, 550), nullable=True),
-            "se_smoothness": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "se_compactness": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "se_concavity": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "se_concave_points": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "se_symmetry": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "se_fractal_dimension": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "max_radius": pa.Column(float, pa.Check.between(5, 40), nullable=True),
-            "max_texture": pa.Column(float, pa.Check.between(5, 50), nullable=True),
-            "max_perimeter": pa.Column(float, pa.Check.between(40, 260), nullable=True), 
-            "max_area": pa.Column(float, pa.Check.between(140, 4300), nullable=True),
-            "max_smoothness": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "max_compactness": pa.Column(float, pa.Check.between(0, 2), nullable=True),
-            "max_concavity": pa.Column(float, pa.Check.between(0, 2), nullable=True),
-            "max_concave_points": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "max_symmetry": pa.Column(float, pa.Check.between(0, 1), nullable=True),
-            "max_fractal_dimension": pa.Column(float, pa.Check.between(0, 1), nullable=True)
-        },
-        checks=[
-            pa.Check(lambda df: ~df.duplicated().any(), error="Duplicate rows found."),
-            pa.Check(lambda df: ~(df.isna().all(axis=1)).any(), error="Empty rows found.")
-        ]
-    )
-    schema.validate(cancer, lazy=True)
+    validate_data(cancer)
     
     # create the split
     cancer_train, cancer_test = train_test_split(
